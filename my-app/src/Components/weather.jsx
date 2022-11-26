@@ -1,4 +1,5 @@
 import React, { useEffect ,useState} from "react";
+import { Outlet } from "react-router-dom";
 
 //e167a121565880362a4769a2e4acf518
 export default function Weather() {
@@ -48,6 +49,7 @@ export default function Weather() {
       </div>
         <ErrorMessage error={error}/>
         <WeatherData data={data}/>
+        <Outlet/>
       </div>
     )
 }
@@ -94,6 +96,7 @@ function WeatherData(props){
         <p>{data?.weather[0].description}</p>
         <p>Wind Speed:{data?.wind.speed} m/s</p>
       </div>
+      
       </>
     )
   }else {
