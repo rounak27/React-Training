@@ -1,28 +1,40 @@
-//import logo from './logo.svg';
-import {useEffect,useState} from 'react'
-import { Route, Routes,Link } from 'react-router-dom';
-import './App.css';
-import Weather from './Components/weather';
-import AnimeQuotes from './Components/AnimeQuotes';
-import Main from './Components/main';
-//import Game from "./component/game.jsx";
-//import Square from "./component/square.jsx";
-function App() {
-  return (
-    <div>
-      <nav>
-        <ul>
-          <li><Link to ='/'>Weather</Link></li>
-          <li><Link to ='/anime'>AnimeQuotes</Link></li>
-        </ul>
-      </nav>
-      <Routes >
-        <Route path="/" element={<Weather/>}>
-        <Route path="/main" element={<Main />}/>
-        </Route>
-        <Route path="/anime" element={<AnimeQuotes/>}/>
-      </Routes>
-    </div>
-  )
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import About from "./Routes/About";
+import Home,{fetch} from "./Routes/Home";
+import Root from "./Routes/Root";
+import "./App.css";
+import NewPost, { submitPost } from "./Routes/Newpost";
+import Post, { postloader } from "./Routes/Post";
+export default function App()
+{
+  const router = createBrowserRouter([{
+    path: '/',
+    element:<Root/>,
+    children :[
+      {
+        path:"/",
+        element:<Home/>,
+        loader: fetch
+      },
+      {
+        path:"/about",
+        element:<About/>
+      },
+      {
+        path:"/post/:id",
+        element:<Post/>,
+        loader: postloader
+      },
+      {
+        path:'/new',
+        element: <NewPost/>,
+        action :submitPost,
+       
+      }
+    ]
+  }])
+  return( 
+     <RouterProvider router={router}/>
+     )
+
 }
-export default App;
